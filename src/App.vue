@@ -34,7 +34,7 @@ const route = useRoute();
           </router-link>
           <router-link to="/badge" class="flex flex-col items-center justify-center">
             <img :src="route.path === '/badge' ? '/footer/badge-gray.png' : '/footer/badge-pink.png'" class="w-7 h-7" alt="badge" />
-            <span :class="`${route.path === '/badge' ? 'text-gray-400' : ''} mt-1 text-xs`">뱃지</span>
+            <span :class="`${route.path === '/badge' ? 'text-gray-400' : ''} mt-1 text-xs`">배지</span>
           </router-link>
           <router-link to="/beaurit-zone" class="flex flex-col items-center justify-center">
             <img :src="route.path === '/beaurit-zone' ? '/footer/beaurit-zone-gray.png' : '/footer/beaurit-zone-pink.png'" class="w-7 h-7" alt="beaurit-zone" />

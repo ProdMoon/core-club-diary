@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useStampStore } from '@/stores/stamp.js';
+import { useBeauritZonePopupStore } from '@/stores/beaurit-zone-popup.js';
 import BadgeButton from '@/components/diary/BadgeButton.vue';
 
 const stampStore = useStampStore();
+const beauritZonePopupStore = useBeauritZonePopupStore();
 
 const moodList = ref([]);
 const moodText = ['만족감', '자신감', '성취감', '스트레스 해소', '개운함', '불안감', '지루함', '무기력함', '피곤함', '모르겠음'];
@@ -39,6 +41,7 @@ const submit = () => {
     note: note.value,
   };
   stampStore.setStamp(data);
+  beauritZonePopupStore.setIsPopup(true);
 };
 </script>
 <template>

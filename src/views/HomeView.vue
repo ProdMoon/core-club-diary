@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { Transition, ref } from 'vue';
 import TodayBefore from '@/components/home/TodayBefore.vue';
 import TodayAfter from '@/components/home/TodayAfter.vue';
 import WrittenPage from '@/components/home/WrittenPage.vue';
 import { useLeftTimeStore } from '@/stores/lefttime.js';
 import { useStampStore } from '@/stores/stamp.js';
+import { useBeauritZonePopupStore } from '@/stores/beaurit-zone-popup.js';
 
 const icons = {
   'complete': '/sparkling-heart.png',
@@ -18,6 +19,8 @@ const todayId = ref(4);
 
 const leftTimeStore = useLeftTimeStore();
 leftTimeStore.setLeftTime({ hours: 3, minutes: 30, seconds: 0 });
+
+const beauritZonePopupStore = useBeauritZonePopupStore();
 </script>
 
 <template>
@@ -48,4 +51,54 @@ leftTimeStore.setLeftTime({ hours: 3, minutes: 30, seconds: 0 });
       <written-page :id="selectedId" />
     </div>
   </main>
+  <Transition name="fade">
+    <div id="beaurit-zone-popup" v-show="beauritZonePopupStore.isPopup" class="absolute z-50 left-[163px] bottom-[88px] w-40 h-16 border rounded-2xl border-pink-200 shadow-md bg-pink-50 flex flex-col items-center justify-center">
+      <span class="font-bold text-pink-400 text-center">
+        "뷰릿존 구경오세요!"
+      </span>
+      <span class="text-xs font-bold text-pink-400 text-center">
+        Click Me!
+      </span>
+    </div>
+  </Transition>
 </template>
+
+<style scoped>
+#beaurit-zone-popup {
+  animation: popup 1s infinite;
+  transition: all 0.3s;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#beaurit-zone-popup::before {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 13px 10px 0;
+  border-style: solid;
+  border-color: #ffcdf1 transparent;
+  display: block;
+  width: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

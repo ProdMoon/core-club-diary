@@ -49,6 +49,13 @@ const router = createRouter({
       name: 'beaurit-zone-article',
       component: () => import('@/views/beaurit-zone/ArticleView.vue'),
     },
+
+    // 설정
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('@/views/SettingsView.vue'),
+    },
   ],
 });
 

@@ -1,35 +1,42 @@
 <script setup>
 import { ref } from 'vue';
+import TodayBefore from '@/components/home/TodayBefore.vue';
+import TodayAfter from '@/components/home/TodayAfter.vue';
+import { useLeftTimeStore } from '@/stores/lefttime.js';
 
 const icons = {
-  'sparkling-heart': '/sparkling-heart.png',
-  'gray-heart': '/gray-heart.png',
+  'complete': '/sparkling-heart.png',
+  'missed': '/gray-heart.png',
 };
 
 const stampList = ref([
-  { id: 1, icon: 'sparkling-heart' },
-  { id: 2, icon: 'sparkling-heart' },
-  { id: 3, icon: 'gray-heart' },
-  { id: 4, icon: 'gray-heart' },
-  { id: 5, icon: 'gray-heart' },
-  { id: 6, icon: 'gray-heart' },
-  { id: 7, icon: 'gray-heart' },
-  { id: 8, icon: 'gray-heart' },
-  { id: 9, icon: 'gray-heart' },
-  { id: 10, icon: 'gray-heart' },
-  { id: 11, icon: 'gray-heart' },
-  { id: 12, icon: 'gray-heart' },
-  { id: 13, icon: 'gray-heart' },
-  { id: 14, icon: 'gray-heart' },
-  { id: 15, icon: 'gray-heart' },
-  { id: 16, icon: 'gray-heart' },
-  { id: 17, icon: 'gray-heart' },
-  { id: 18, icon: 'gray-heart' },
-  { id: 19, icon: 'gray-heart' },
-  { id: 20, icon: 'gray-heart' },
+  { id: 1, state: 'complete', day: 4 },
+  { id: 2, state: 'complete', day: 5 },
+  { id: 3, state: 'missed', day: 6 },
+  { id: 4, state: 'complete', day: 7 },
+  { id: 5, state: 'not-yet', day: 8 },
+  { id: 6, state: 'not-yet', day: 11 },
+  { id: 7, state: 'not-yet', day: 12 },
+  { id: 8, state: 'not-yet', day: 13 },
+  { id: 9, state: 'not-yet', day: 14 },
+  { id: 10, state: 'not-yet', day: 15 },
+  { id: 11, state: 'not-yet', day: 18 },
+  { id: 12, state: 'not-yet', day: 19 },
+  { id: 13, state: 'not-yet', day: 20 },
+  { id: 14, state: 'not-yet', day: 21 },
+  { id: 15, state: 'not-yet', day: 22 },
+  { id: 16, state: 'not-yet', day: 25 },
+  { id: 17, state: 'not-yet', day: 26 },
+  { id: 18, state: 'not-yet', day: 27 },
+  { id: 19, state: 'not-yet', day: 28 },
+  { id: 20, state: 'not-yet', day: 29 },
 ]);
 
-const leftTime = ref('3시간 30분');
+const selectedId = ref(8);
+const todayId = ref(8);
+
+const leftTimeStore = useLeftTimeStore();
+leftTimeStore.setLeftTime({ hours: 3, minutes: 30, seconds: 0 });
 </script>
 
 <template>
@@ -43,20 +50,17 @@ const leftTime = ref('3시간 30분');
         <div class="mt-5 p-6 rounded-3xl bg-white w-[320px] h-[260px] grid grid-cols-5 gap-4">
           <div v-for="stamp in stampList" :key="stamp.id"
                class="border border-dashed border-pink-500 rounded-xl w-10 h-10 overflow-hidden">
-            <div :class="`${stamp.icon === 'sparkling-heart' ? 'bg-pink-300' : ''} flex items-center justify-center w-full h-full`">
-              <img :src="icons[stamp.icon]" :alt="stamp.icon" />
+            <div :class="`${stamp.state === 'complete' ? 'bg-pink-300' : ''} flex items-center justify-center w-full h-full`">
+              <img v-if="stamp.state !== 'not-yet'" :src="icons[stamp.state]" :alt="stamp.state" />
+              <div v-else class="text-pink-300">{{ stamp.day }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="mt-10 bg-white w-full h-[350px] rounded-t-3xl flex justify-center">
-      <div class="mt-16 border border-dashed border-pink-500 rounded-2xl w-72 h-40 flex flex-col items-center">
-        <img class="mt-6" src="/pink-clock.png" alt="pink-clock" />
-        <div class="mt-2 text-pink-400">오후 9시 수업까지</div>
-        <div class="mt-1 text-2xl text-pink-400">{{ leftTime }}</div>
-        <div class="mt-1 text-pink-400">남았어요!</div>
-      </div>
+      <today-before v-if="todayId === selectedId && leftTimeStore.getLeftTimeSeconds() > 0" @click="leftTimeStore.setLeftTime({ hours: 0, minutes: 0, seconds: 0 })" />
+      <today-after v-else-if="todayId === selectedId && leftTimeStore.getLeftTimeSeconds() <= 0" />
     </div>
   </main>
 </template>

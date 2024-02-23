@@ -1,11 +1,12 @@
 <script setup>
 import { RouterView, useRoute } from 'vue-router';
+import { time2digits } from '@/utils/time.js';
 
 function currentTime() {
   const date = new Date();
   const hours = date.getHours();
   const minutes = date.getMinutes();
-  return `${hours}:${minutes}`;
+  return `${time2digits(hours)}:${time2digits(minutes)}`;
 }
 
 const route = useRoute();

@@ -26,8 +26,13 @@ const router = createRouter({
     {
       path: '/beaurit-zone',
       name: 'beaurit-zone',
-      component: () => import('@/views/BeauritZoneView.vue'),
+      component: () => import('@/views/beaurit-zone/MainView.vue'),
     },
+    {
+      path: '/beaurit-zone/article/:id',
+      name: 'beaurit-zone-article',
+      component: () => import('@/views/beaurit-zone/ArticleView.vue'),
+    }
   ],
 });
 

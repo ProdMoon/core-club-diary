@@ -37,7 +37,9 @@
       </svg>
     </div>
     <div class="mt-5 px-10">
-      <img src="/beaurit-zone-1.png" alt="beaurit-zone-1" />
+      <router-link to="/beaurit-zone/article/1">
+        <img src="/beaurit-zone-1.png" alt="beaurit-zone-1" />
+      </router-link>
     </div>
     <div class="mt-5 px-5">
       <img src="/beaurit-zone-2.png" alt="beaurit-zone-2" />

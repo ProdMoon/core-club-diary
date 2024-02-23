@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'write',
       component: () => import('@/views/diary/WriteView.vue'),
     },
+    {
+      path: '/beaurit-zone',
+      name: 'beaurit-zone',
+      component: () => import('@/views/BeauritZoneView.vue'),
+    },
   ],
 });
 

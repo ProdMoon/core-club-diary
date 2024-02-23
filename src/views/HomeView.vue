@@ -1,5 +1,5 @@
 <script setup>
-import { Transition, ref } from 'vue';
+import { ref } from 'vue';
 import TodayBefore from '@/components/home/TodayBefore.vue';
 import TodayAfter from '@/components/home/TodayAfter.vue';
 import WrittenPage from '@/components/home/WrittenPage.vue';
@@ -51,6 +51,7 @@ const beauritZonePopupStore = useBeauritZonePopupStore();
       <written-page :id="selectedId" />
     </div>
   </main>
+  
   <Transition name="fade">
     <div id="beaurit-zone-popup" v-show="beauritZonePopupStore.isPopup" class="absolute z-50 left-[163px] bottom-[88px] w-40 h-16 border rounded-2xl border-pink-200 shadow-md bg-pink-50 flex flex-col items-center justify-center">
       <span class="font-bold text-pink-400 text-center">

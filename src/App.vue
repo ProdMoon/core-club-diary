@@ -26,7 +26,7 @@ const route = useRoute();
         </div>
       </header>
       <RouterView />
-      <footer v-if="route.path !== '/login'" class="absolute bottom-0 w-full h-20 bg-pink-50 rounded-t-2xl border-t border-pink-200">
+      <footer v-if="route.path !== '/login'" class="absolute bottom-0 z-30 w-full h-20 bg-pink-50 rounded-t-2xl border-t border-pink-200">
         <nav class="w-full h-full flex items-center justify-around text-pink-300">
           <router-link to="/home">일지</router-link>
           <router-link to="/badge">배지</router-link>

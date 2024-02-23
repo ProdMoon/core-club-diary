@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useStampStore } from '@/stores/stamp.js';
 import BadgeButton from '@/components/diary/BadgeButton.vue';
+
+const stampStore = useStampStore();
 
 const moodList = ref([]);
 const moodText = ['만족감', '자신감', '성취감', '스트레스 해소', '개운함', '불안감', '지루함', '무기력함', '피곤함', '모르겠음'];
@@ -21,6 +24,22 @@ for (let i = 0; i < stimulusText.length; i++) {
     text: stimulusText[i],
   });
 }
+
+const note = ref('');
+
+const submit = () => {
+  const mood = moodList.value.filter((item) => item.selected).map((item) => item.text);
+  const stimulus = stimulusList.value.filter((item) => item.selected).map((item) => item.text);
+
+  const data = {
+    id: 4,
+    state: 'complete',
+    mood: mood,
+    stimulus: stimulus,
+    note: note.value,
+  };
+  stampStore.setStamp(data);
+};
 </script>
 <template>
   <div class="absolute top-0 left-0 w-full h-24 z-20 bg-pink-50">
@@ -80,9 +99,7 @@ for (let i = 0; i < stimulusText.length; i++) {
           <div class="absolute -top-1.5 -right-3 font-bold text-pink-500">*</div>
         </div>
         <div class="grid grid-cols-5 gap-2 mt-3">
-          <badge-button v-for="item in stimulusList" :key="item.id" @click="item.selected = !item.selected" :selected="item.selected" :text="item.text" >
-            {{ item.text }}
-          </badge-button>
+          <badge-button v-for="item in stimulusList" :key="item.id" @click="item.selected = !item.selected" :selected="item.selected" :text="item.text" />
         </div>
         <div class="mt-5 flex space-x-1 items-center">
           <div class="rounded-full border border-pink-300 bg-pink-400 w-2 h-2"></div>
@@ -116,7 +133,7 @@ for (let i = 0; i < stimulusText.length; i++) {
         <div class="text-orange-800 text-sm font-semibold">
           오늘의 소감
         </div>
-        <textarea class="mt-3 w-full h-40 border border-pink-200 rounded-lg bg-white p-3" placeholder="오늘의 소감을 기록해주세요"></textarea>
+        <textarea v-model="note" class="mt-3 w-full h-40 border border-pink-200 rounded-lg bg-white p-3" placeholder="오늘의 소감을 기록해주세요"></textarea>
       </div>
 
       <div class="mt-10 p-3 flex flex-col items-center w-full border border-pink-300 rounded-2xl bg-pink-100">
@@ -154,7 +171,9 @@ for (let i = 0; i < stimulusText.length; i++) {
       <div class="w-full my-14"></div>
     </div>
   </div>
-  <footer class="absolute z-20 bottom-0 w-full h-20 rounded-t-2xl border-t border-pink-300 flex items-center justify-center overflow-hidden">
-    <button class="w-full h-full text-pink-400 font-bold bg-pink-200 hover:bg-pink-100 active:bg-pink-200">작성 완료</button>
-  </footer>
+  <router-link to="/home">
+    <footer class="absolute z-40 bottom-0 w-full h-20 rounded-t-2xl border-t border-pink-300 flex items-center justify-center overflow-hidden">
+      <button @click="submit" class="w-full h-full text-pink-400 font-bold bg-pink-200 hover:bg-pink-100 active:bg-pink-200">작성 완료</button>
+    </footer>
+  </router-link>
 </template>

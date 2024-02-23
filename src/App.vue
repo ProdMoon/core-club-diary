@@ -14,8 +14,8 @@ const route = useRoute();
 
 <template>
   <div class="flex items-center justify-center">
-    <div class="relative w-[390px] h-[844px] bg-pink-100">
-      <header v-if="route.path !== '/login'" class="absolute top-0 w-full h-12 flex items-center justify-between">
+    <div class="relative w-[390px] h-[844px] bg-pink-50 overflow-y-hidden">
+      <header v-if="route.path !== '/login'" class="absolute z-50 top-0 w-full h-12 flex items-center justify-between">
         <div class="w-fit ml-5">
           {{ currentTime() }}
         </div>
